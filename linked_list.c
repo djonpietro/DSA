@@ -123,3 +123,21 @@ ListNode *list_search(List *list, int (*compare)(void *a, void *b), void *x) {
 
     return NULL;
 }
+
+List *list_merge(List *list1, List *list2, void (*destroy)(void *data)) {
+    if (!list1 || !list2) {
+        fputs(NULL_LIST_POINTER, stderr);
+        return NULL;
+    }
+
+    list1->tail->next = list2->head->next;
+    
+    list1->num_elem += list2->num_elem;
+
+    list1->destroy = destroy;
+
+    free(list2->head);
+    free(list2);
+
+    return list1;
+}

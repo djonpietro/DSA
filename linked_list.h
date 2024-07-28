@@ -94,7 +94,8 @@ void list_append(List *list, void *data);
  * @brief Searches for an element in the list.
  *
  * This function searches for an element in the list that matches the provided data,
- * using the specified comparison function, and returns a pointer to the previous one.
+ * using the specified comparison function, and returns a pointer to the previous element 
+ * to the searched one.
  *
  * @param list A pointer to the list structure.
  * @param compare A pointer to a function that compares two elements.
@@ -116,6 +117,11 @@ ListNode *list_search(List *list, int (*compare)(void *a, void *b), void *x);
  * @param destroy A pointer to a function to destroy the elements. If no cleanup is required, pass NULL.
  *
  * @return A pointer to the newly merged list structure, or NULL if memory allocation fails.
+ * 
+ * @note list1 and list2 pointers shall be no longer used once the memory space allocated for them
+ *       will be liberated in to order to prevent data conflict among their usage and the new merged list
+ *       stucture. Besides, the user is responsible for giving the appropriate destroy function to liberate
+ *       the list nodes in case of list1 and list2 nodes have been allocated with different routines.
  */
 List *list_merge(List *list1, List *list2, void (*destroy)(void *data));
 
