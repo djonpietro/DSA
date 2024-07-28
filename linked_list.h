@@ -103,7 +103,7 @@ void list_append(List *list, void *data);
  *
  * @return A pointer to the previous element to the searched one, or NULL if no matching element is found.
  */
-ListNode *list_search(List *list, int (*compare)(void *a, void *b), void *x);
+ListNode *list_search(const List *list, int (*compare)(void *a, void *b), void *x);
 
 /**
  * @brief Merges two lists into a single list.
@@ -151,7 +151,7 @@ List *list_merge_sorted(List *list1, List *list2, void (*destroy)(void *data), i
  *
  * @return A pointer to the reversed list structure, or NULL if memory allocation fails.
  */
-List *list_reverse(List *list);
+void list_reverse(List *list);
 
 /**
  * @brief Retrieves the head node of the list.

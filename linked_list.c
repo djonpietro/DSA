@@ -104,7 +104,7 @@ void list_append(List *list, void *data) {
     list_insert_next(list, list_tail(list), data);
 }
 
-ListNode *list_search(List *list, int (*compare)(void *a, void *b), void *x) {
+ListNode *list_search(const List *list, int (*compare)(void *a, void *b), void *x) {
     if (!list) {
         fputs(NULL_LIST_POINTER, stderr);
         return NULL;
@@ -140,4 +140,54 @@ List *list_merge(List *list1, List *list2, void (*destroy)(void *data)) {
     free(list2);
 
     return list1;
+}
+
+List *list_merge_sorted(List *list1, List *list2, void (*destroy)(void *data), int (*compare)(void *a, void *b)) {
+    ListNode *walker1 = list1->head->next,
+             *walker2 = list2->head->next,
+             dummy,
+             *tail = &dummy;
+    
+    dummy.next = NULL;
+
+    while (walker1 != NULL && walker2 != NULL) {
+        if (compare(walker1->data, walker2->data) <= 0) {
+            tail->next = walker1;
+            walker1 = walker1->next;
+        } else {
+            tail->next = walker2;
+            walker2 = walker2->next;
+        }
+
+        tail = tail->next;
+    }    
+
+    if (walker1 == NULL)
+        tail->next = walker2;
+    else
+        tail->next = walker1;
+    
+    list1->num_elem += list2->num_elem;
+
+    list1->head = dummy.next;
+
+    list1->destroy = destroy;
+
+    free(list2->head); free(list2);
+
+    return list1;
+}
+
+ListNode *reverse(ListNode *head) {
+    if (head->next == NULL)
+        return head;
+    else {
+        ListNode *newHead = reverse(head);
+        head->next = head;
+        return newHead;
+    }
+}
+
+void list_reverse(List *list) {
+    list->head = reverse(list->head);
 }
