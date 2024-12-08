@@ -169,7 +169,7 @@ List *list_merge_sorted(List *list1, List *list2, void (*destroy)(void *data), i
     
     list1->num_elem += list2->num_elem;
 
-    list1->head = dummy.next;
+    list1->head->next = dummy.next;
 
     list1->destroy = destroy;
 
@@ -179,15 +179,21 @@ List *list_merge_sorted(List *list1, List *list2, void (*destroy)(void *data), i
 }
 
 ListNode *reverse(ListNode *head) {
-    if (head->next == NULL)
+    if (!head->next)
         return head;
     else {
         ListNode *newHead = reverse(head);
-        head->next = head;
+        (head->next)->next = head;
+        head->next = NULL;
         return newHead;
     }
 }
 
 void list_reverse(List *list) {
-    list->head = reverse(list->head);
+    if (list == NULL) {
+        fputs(NULL_LIST_POINTER, stderr);
+        return;
+    }
+
+    list->head->next = reverse(list->head->next);
 }
