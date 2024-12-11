@@ -182,7 +182,7 @@ ListNode *reverse(ListNode *head) {
     if (!head->next)
         return head;
     else {
-        ListNode *newHead = reverse(head);
+        ListNode *newHead = reverse(head->next);
         (head->next)->next = head;
         head->next = NULL;
         return newHead;
@@ -196,4 +196,15 @@ void list_reverse(List *list) {
     }
 
     list->head->next = reverse(list->head->next);
+}
+
+void  list_print(List * list, void (*node_print)(ListNode * node)) {
+    int total_char = 0;
+
+    ListNode * walker = list_head(list)->next;
+
+    while (walker != NULL) {
+        node_print(walker);
+        walker = walker->next;
+    }
 }

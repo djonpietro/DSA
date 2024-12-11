@@ -154,6 +154,19 @@ List *list_merge_sorted(List *list1, List *list2, void (*destroy)(void *data), i
 void list_reverse(List *list);
 
 /**
+ * @brief Prints all the elements of List
+ * 
+ * This functions prints all nodes from a list in a specified stream by using a user defined
+ * node_print function which protype must be
+ * 
+ *        void node_print(ListNode * node);
+ * 
+ * @param list a List pointer
+ * @param node_print user defined function for printing a node
+ */
+void list_print(List * list, void (*node_print)(ListNode * node));
+
+/**
  * @brief Retrieves the head node of the list.
  *
  * @param list A pointer to the list structure.
