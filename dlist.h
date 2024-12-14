@@ -29,7 +29,8 @@ typedef struct Dlist {
  * 
  * Otherwise it will generate an error. 
  * 
- * @param destroy A function pointer to handle freeing the memory of the data (optional).
+ * @param destroy A function pointer to handle freeing the memory of the data (optional). If no
+ *                clean up is necessary, than pass NULL as for destroy parameter.
  * @return A pointer to the newly initialized list.
  */
 Dlist * dlist_init(void (*destroy)(void * data));

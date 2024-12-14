@@ -41,6 +41,14 @@ List *list_init(void (*destroy)(void *data)) {
 }
 
 void list_insert_next(List *list, ListNode *previous, void *data) {
+    if (!list) {
+        fputs(NULL_LIST_POINTER, stderr);
+        return;
+    } else if (!previous) {
+        fputs(PREVIOUS_PARAM_NULL, stderr);
+        return;
+    }
+   
     ListNode *new_elem = malloc(sizeof(ListNode));
 
     if (new_elem == NULL) {
@@ -199,6 +207,14 @@ void list_reverse(List *list) {
 }
 
 void  list_print(List * list, void (*node_print)(ListNode * node)) {
+    if (!list) {
+        fputs(NULL_LIST_POINTER, stderr);
+        return;
+    } else if (!node_print) {
+        fputs("Null pointer for node_print parameter\n", stderr);
+        return;
+    }
+
     int total_char = 0;
 
     ListNode * walker = list_head(list)->next;
