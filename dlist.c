@@ -180,7 +180,7 @@ void dlist_rotate(Dlist * dlist, int i) {
     int num_jumps = i % dlist_num_elem(dlist);
 
     if (num_jumps == 0)
-        return;
+        return; /*There's nothing to do*/
 
     DlistNode * pt = dlist_head(dlist)->next;
     DlistNode * head = dlist_head(dlist);
@@ -206,4 +206,27 @@ void dlist_rotate(Dlist * dlist, int i) {
     
     /*Pt new previous is head*/
     pt->prev = head;
+}
+
+void dlist_new_first(Dlist * dlist, DlistNode * new_first) {
+    if (!dlist) {
+        fputs(NULL_DLIST_POINTER, stderr);
+        return;
+    } else if (!new_first) {
+        fputs("Null pointer for new first", stderr);
+        return;
+    } else if (new_first == dlist_head(dlist)){
+        fputs("Dlist head is invalid as new first.", stderr);
+        return;
+    }
+
+    DlistNode * head = dlist_head(dlist);
+
+    head->prev->next = head->next;
+
+    head->next->prev = head->prev;
+
+    head->next = new_first; head->prev = new_first->prev;
+
+    new_first->prev = head;
 }
