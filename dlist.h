@@ -18,7 +18,16 @@ typedef struct Dlist {
 } Dlist;
 
 /**
- * Initializes a new doubly linked list.
+ * Initializes a new doubly circle linked list.
+ * 
+ * The destroy parameter must be a pointer to function that will be used to deallocate memory for
+ * data stored. For example, if we use malloc() to reserv memory for some structure, you should
+ * pass free() as the destroyer paramenter. It's important that the function prototybe to be as
+ * follow
+ * 
+ *      void * destroy_function(void * data);
+ * 
+ * Otherwise it will generate an error. 
  * 
  * @param destroy A function pointer to handle freeing the memory of the data (optional).
  * @return A pointer to the newly initialized list.
@@ -73,6 +82,18 @@ void dlist_terminate(Dlist * dlist);
 /**
  * Searches for a node containing specific data using a comparison function.
  * 
+ * The compare function can be user defined or belongs to C standar library.
+ * For example, if our data is pointers to string, the compare parameter can be
+ * strcmp() from string.h. For other user defined types, the prototype of compare
+ * must be
+ *      
+ *      int compare (void *a, void *b);
+ * 
+ * It must behave as strcmp() from string.h: if a is "greater" than be, than it should return
+ * a positive interger. On the other hand, if b is "greater" than a, than it should return a negative 
+ * value. Finally, if a and b are equal, than it must return 0. The logic of choosing who is the 
+ * greatest is up to the user.
+ * 
  * @param dlist Pointer to the doubly linked list.
  * @param x Pointer to the data to search for.
  * @param compare Function pointer to compare two data elements.
@@ -95,14 +116,6 @@ void dlist_rotate(Dlist * dlist, int i);
  * @param new_first Pointer to the node to set as the new head of the list.
  */
 void dlist_new_first(Dlist * dlist, DlistNode * new_first);
-
-/**
- * Converts the doubly linked list into a singly linked list.
- * 
- * @param dlist Pointer to the doubly linked list.
- * @return A pointer to the newly created singly linked list.
- */
-List * dlist_to_list(Dlist * dlist);
 
 /**
  * Macro to access the head node of the list.
