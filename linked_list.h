@@ -96,6 +96,19 @@ void list_append(List *list, void *data);
  * This function searches for an element in the list that matches the provided data,
  * using the specified comparison function, and returns a pointer to the previous element 
  * to the searched one.
+ * 
+ * The compare function can be user defined or belongs to C standar library.
+ * For example, if our data is pointers to string, the compare parameter can be
+ * strcmp() from string.h. For other user defined types, the prototype of compare
+ * must be
+ *      
+ *      int compare (void *a, void *b);
+ * 
+ * It must behave as strcmp() from string.h: if a is "greater" than be, than it should return
+ * a positive interger. On the other hand, if b is "greater" than a, than it should return a negative 
+ * value. Finally, if a and b are equal, than it must return 0. The logic of choosing who is the 
+ * greatest is up to the user.
+
  *
  * @param list A pointer to the list structure.
  * @param compare A pointer to a function that compares two elements.
